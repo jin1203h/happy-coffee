@@ -1,0 +1,98 @@
+server:
+  port: 8088
+
+---
+
+spring:
+  profiles: default
+  cloud:
+    gateway:
+      routes:
+        - id: order
+          uri: http://localhost:8081
+          predicates:
+            - Path=/orders/** 
+        - id: make
+          uri: http://localhost:8082
+          predicates:
+            - Path=/makes/**/cancelations/** 
+        - id: myPage
+          uri: http://localhost:8083
+          predicates:
+            - Path= /myPages/**
+        - id: product
+          uri: http://localhost:8084
+          predicates:
+            - Path=/products/** 
+        - id: member
+          uri: http://localhost:8085
+          predicates:
+            - Path=/members/** 
+        - id: salesBoard
+          uri: http://localhost:8086
+          predicates:
+            - Path= /salesBoards/**
+        - id: Payment
+          uri: http://localhost:8087
+          predicates:
+            - Path=/payments/** 
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+
+---
+
+spring:
+  profiles: docker
+  cloud:
+    gateway:
+      routes:
+        - id: order
+          uri: http://order:8080
+          predicates:
+            - Path=/orders/** 
+        - id: make
+          uri: http://make:8080
+          predicates:
+            - Path=/makes/**/cancelations/** 
+        - id: myPage
+          uri: http://myPage:8080
+          predicates:
+            - Path= /myPages/**
+        - id: product
+          uri: http://product:8080
+          predicates:
+            - Path=/products/** 
+        - id: member
+          uri: http://member:8080
+          predicates:
+            - Path=/members/** 
+        - id: salesBoard
+          uri: http://salesBoard:8080
+          predicates:
+            - Path= /salesBoards/**
+        - id: Payment
+          uri: http://Payment:8080
+          predicates:
+            - Path=/payments/** 
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+server:
+  port: 8080
